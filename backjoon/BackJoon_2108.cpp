@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	int n, i, j, * arr, min;
+	int n, i, j, * arr, min = -5000, tmp, minsize = 0;
 	double sum = 0;
 	scanf("%d", &n);
 
@@ -20,22 +20,48 @@ int main()
 
 	sort(arr, arr + n);
 
+	for (i = 0;i < n;i++)
+	{
+		j = n - 1;
+		while (j > i && j > 0)
+		{
+			if (arr[i] == arr[j])
+			{
+				tmp = j + 1 - i;
+				i = j;
+				if (minsize < tmp)
+					minsize = tmp;
+
+				break;
+			}
+			j--;
+		}
+	}
+
+
 	if (n < 2)
 		min = arr[0];
 
-	else
+	else if (minsize == 0)
 		min = arr[1];
 
-	for (i = 0, j = 0;i < n - 1;i++)
+	else
 	{
-		if (arr[i] == arr[i + 1])
+		for (i = 0;i < 2;i++)
 		{
-			min = arr[i];
-			j++;
+			j = 0;
+			while (j + minsize - 1 < n)
+			{
+				if (arr[j] == arr[j + minsize - 1] && arr[j] > min)
+				{
+					min = arr[j];
+					break;
+				}
+				j++;
+			}
 		}
-		if (j == 2)
-			break;
 	}
+
 
 	printf("%.0lf\n", sum / n);
 	printf("%d\n", arr[(n - 1) / 2]);

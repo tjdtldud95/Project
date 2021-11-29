@@ -23,18 +23,12 @@ int main()
     int n, item;
     Node* head = NULL;
 
-   //head = add_node(head,  8);
-   //head = add_node(head,  2);
-   //head = add_node(head,  5);
-   //head = add_node(head,  3);
-   //head = add_node(head,  1);
-   //head = delete_node(head, 10);
-   //print_list(head);
-
     while (1)
     {
+        printf("------------------------------------------------------------------\n");
         printf("무엇을 하시겠습니까?\n");
         printf("1.add_node 2.delete_node 3.clear_list 4.print_list 5.exit\n");
+        printf("------------------------------------------------------------------\n->");
         scanf("%d", &n);
         switch (n)
         {
@@ -125,6 +119,13 @@ Node* add_node(Node* head, int item)
 }
 void print_list(Node* head)
 {
+    if (is_empty(head) == TRUE)
+    {
+        printf("List is Empty\n");
+        return;
+    }
+
+    printf("print list : ");
     while (head != NULL)
     {
         printf("%d ", head->data);
@@ -136,7 +137,7 @@ Node* delete_node(Node* head, int item)
 {
     if (is_in_list(head, item) == FALSE)
     {
-        printf("list doesn't have item\n");
+        printf("List doesn't have '%d'\n",item);
         return head;
     }
 
@@ -149,6 +150,8 @@ Node* delete_node(Node* head, int item)
         tmp = pre;
         head = pre->next;
         free(tmp);
+
+        printf("'%d' is deleted'\n", item);
         return head;
     }
 
@@ -163,6 +166,8 @@ Node* delete_node(Node* head, int item)
         pre = pre->next;
     }
     
+    printf("'%d' is deleted'\n", item);
+
     free(tmp);
     return head;
 }
@@ -170,7 +175,7 @@ Node* clear(Node* head)
 {
     if (is_empty(head) == TRUE)
     {
-        printf("List is alread clear\n");
+        printf("List is Empty\n");
         return NULL;
     }
     
@@ -183,7 +188,7 @@ Node* clear(Node* head)
         free(deleteNode);
     }
 
-    printf("List is clear\n");
+    printf("List is cleared\n");
 
     return NULL;
 }

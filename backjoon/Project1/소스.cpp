@@ -1,44 +1,47 @@
-﻿#include<iostream>
-#include<vector>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<stack>
 #include<algorithm>
 
 using namespace std;
 
-int main()
+int num1 = 0, num0 = 0;
+int answer[1000];
+
+int fibonacci(int n)
 {
-    int n,a; 
-    
-    cin >> n;
-    vector<int> list (n+1,0);
-
-    for (int i = 2; i <= n;i++)
-    {
-        if (i < 4)
-        {
-            list[i] = 1;
-            continue;
-        }
-        int value = INT_MAX;
-        if (i % 3 == 0)
-        {
-            value = min(value, list[i / 3]);
-        }
-
-        if (i % 2 == 0)
-        {
-            value = min(value, list[i / 2]);
-        }
-
-        value = min(value, list[i - 1]);
-        
-        list[i] = value+1;
+    if (n == 0) {
+        num0++;
+        return 0;
+    }
+    else if (n == 1) {
+        num1++;
+        return 1;
     }
 
-    cout << list[n];
+    if (answer[n] != 0)
+        return answer[n];
 
+    else
+    {
+        answer[n] = fibonacci(n - 1) + fibonacci(n - 2);
+        return answer[n];
+    }
+}
+int main()
+{
+    int n, a;
 
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a;
+        fibonacci(a);
 
-
+        cout << num0 << " " << num1;
+        num0 = 0;
+        num1 = 0;
+    }
     return 0;
 }
 

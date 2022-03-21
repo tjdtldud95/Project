@@ -1,47 +1,31 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-#include<iostream>
-#include<stack>
-#include<algorithm>
-
+﻿#include<iostream>
 using namespace std;
 
-int num1 = 0, num0 = 0;
-int answer[1000];
-
-int fibonacci(int n)
-{
-    if (n == 0) {
-        num0++;
-        return 0;
-    }
-    else if (n == 1) {
-        num1++;
-        return 1;
-    }
-
-    if (answer[n] != 0)
-        return answer[n];
-
-    else
-    {
-        answer[n] = fibonacci(n - 1) + fibonacci(n - 2);
-        return answer[n];
-    }
-}
+int sum[100000];
 int main()
 {
-    int n, a;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    cin >> n;
-    for (int i = 0; i < n; i++)
+    int n,m,tmp,start, end;;
+    cin >> n >> m;
+
+    for (int i = 1; i <= n; i++)
     {
-        cin >> a;
-        fibonacci(a);
-
-        cout << num0 << " " << num1;
-        num0 = 0;
-        num1 = 0;
+        cin >> tmp;
+        sum[i] = tmp + sum[i - 1];
     }
+
+    for (int i = 0; i < m; i++)
+    {
+        cin >> start >> end;
+
+        cout << sum[end] - sum[start-1] << "\n";
+    }
+    
+    
+    
     return 0;
 }
 

@@ -1,30 +1,30 @@
 ﻿#include<iostream>
 using namespace std;
 
-int sum[100000];
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    
+    string tmp;
+    int r, m;
 
-    int n,m,tmp,start, end;;
-    cin >> n >> m;
-
-    for (int i = 1; i <= n; i++)
+    cin >> r;
+    while (r)
     {
+        cin >> m;
         cin >> tmp;
-        sum[i] = tmp + sum[i - 1];
+        for (auto it : tmp)
+        {
+            for (int i = 0; i < m; i++)
+            {
+                cout << it;
+            }
+        }
+        cout << "\n";
+        r--;
     }
-
-    for (int i = 0; i < m; i++)
-    {
-        cin >> start >> end;
-
-        cout << sum[end] - sum[start-1] << "\n";
-    }
-    
-    
     
     return 0;
 }

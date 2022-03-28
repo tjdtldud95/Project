@@ -7,25 +7,12 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     
-    string tmp;
-    int r, m;
-
-    cin >> r;
-    while (r)
-    {
-        cin >> m;
-        cin >> tmp;
-        for (auto it : tmp)
-        {
-            for (int i = 0; i < m; i++)
-            {
-                cout << it;
-            }
-        }
-        cout << "\n";
-        r--;
-    }
+    int r; cin >> r;
     
+    for (int i = 1; i <= 9; i++)
+    {
+        cout << r << " * " << i << " = " << r*i<<"\n";
+    }
     return 0;
 }
 

@@ -1,7 +1,7 @@
 ﻿#include<iostream>
 using namespace std;
 
-long long int dp[101] = { 1,1,1,1 ,2,2};
+long long int dp[11] = {1,1,2,4};
 
 long long int answer(int k)
 {
@@ -10,7 +10,7 @@ long long int answer(int k)
 
     else
     {
-        dp[k] = answer(k - 1) + answer(k - 5);
+        dp[k] = answer(k - 1) + answer(k - 2) + answer(k-3);
     }
 
     return dp[k];

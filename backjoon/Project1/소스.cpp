@@ -1,6 +1,21 @@
 ﻿#include<iostream>
 using namespace std;
 
+long long int dp[101] = { 1,1,1,1 ,2,2};
+
+long long int answer(int k)
+{
+    if (dp[k] != 0)
+        return dp[k];
+
+    else
+    {
+        dp[k] = answer(k - 1) + answer(k - 5);
+    }
+
+    return dp[k];
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -9,10 +24,14 @@ int main()
     
     int r; cin >> r;
     
-    for (int i = 1; i <= 9; i++)
+    while (r)
     {
-        cout << r << " * " << i << " = " << r*i<<"\n";
+        int k;  cin >> k;
+        cout << answer(k)<<"\n";
+        r--;
     }
+
+
     return 0;
 }
 

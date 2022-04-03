@@ -13,12 +13,17 @@ int main()
 
     for (int i = 0; i < r; i++)
     {
+        for (int j = r-1; j > i; j--)
+        {
+            cout << " ";
+        }
+
         for (int j = 0; j <= i; j++)
         {
             cout << "*";
         }
 
-        cout << "\n";
+        cout<<"\n";
     }
 
     return 0;

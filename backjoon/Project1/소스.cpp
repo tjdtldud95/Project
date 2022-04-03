@@ -1,20 +1,7 @@
 ﻿#include<iostream>
+#include<vector>
 using namespace std;
 
-long long int dp[11] = {1,1,2,4};
-
-long long int answer(int k)
-{
-    if (dp[k] != 0)
-        return dp[k];
-
-    else
-    {
-        dp[k] = answer(k - 1) + answer(k - 2) + answer(k-3);
-    }
-
-    return dp[k];
-}
 
 int main()
 {
@@ -22,15 +9,23 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     
-    int r; cin >> r;
-    
+    int r, c,tmp,answer=0; cin >> r >> c;
+
+    vector<int> list;
     while (r)
     {
-        int k;  cin >> k;
-        cout << answer(k)<<"\n";
+        cin >> tmp;
+        if (tmp> c)
+        {
+            list.push_back(tmp);
+        }
         r--;
     }
-
+    
+    for (auto it : list)
+    {
+        cout << it << " ";
+    }
 
     return 0;
 }

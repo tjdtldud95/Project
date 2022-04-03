@@ -9,22 +9,16 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
     
-    int r, c,tmp,answer=0; cin >> r >> c;
+    int r; cin >> r;
 
-    vector<int> list;
-    while (r)
+    for (int i = 0; i < r; i++)
     {
-        cin >> tmp;
-        if (tmp> c)
+        for (int j = 0; j <= i; j++)
         {
-            list.push_back(tmp);
+            cout << "*";
         }
-        r--;
-    }
-    
-    for (auto it : list)
-    {
-        cout << it << " ";
+
+        cout << "\n";
     }
 
     return 0;

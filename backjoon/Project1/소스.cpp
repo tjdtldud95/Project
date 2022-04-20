@@ -1,28 +1,37 @@
-﻿#include<iostream>
+﻿#include <string>
+#include <vector>
+
 using namespace std;
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int list[1000] = { 0 };
-    int tmp,answer = 0;
+int solution(vector<vector<int>> board, vector<int> moves) {
+    int answer = 0;
+    vector<int> list;
+    int len = board.size();
 
-    for (int i = 0; i < 10; i++)
+    for (auto index : moves)
     {
-        cin >> tmp;
-        list[tmp % 42]++;
+        for (int i = 0; i < len; i++)
+        {
+            if (board[i][index - 1] != 0)
+            {
+                list.push_back(board[i][index - 1]);
+                board[i][index - 1] = 0;
+                break;
+            }
+        }
     }
 
-    for (auto it : list)
+    len = list.size();
+    for (int i = 0; i < len - 1; i++)
     {
-        if (it != 0)
-            answer++;
+        if (list[i] == list[i + 1])
+        {
+            list.erase(list.begin() + i, list.begin() + i + 2);
+            i = -1;
+            len = list.size();
+            answer += 2;
+        }
     }
 
-    cout << answer;
-    return 0;
+    return answer;
 }
-
-

@@ -1,37 +1,39 @@
 ﻿#include <string>
 #include <vector>
-
+#include <iostream>
 using namespace std;
 
-int solution(vector<vector<int>> board, vector<int> moves) {
-    int answer = 0;
-    vector<int> list;
-    int len = board.size();
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
-    for (auto index : moves)
-    {
-        for (int i = 0; i < len; i++)
-        {
-            if (board[i][index - 1] != 0)
-            {
-                list.push_back(board[i][index - 1]);
-                board[i][index - 1] = 0;
-                break;
-            }
-        }
-    }
+	string list;
+	int n, pLen,len,answer = 0;
 
-    len = list.size();
-    for (int i = 0; i < len - 1; i++)
-    {
-        if (list[i] == list[i + 1])
-        {
-            list.erase(list.begin() + i, list.begin() + i + 2);
-            i = -1;
-            len = list.size();
-            answer += 2;
-        }
-    }
+	cin >> n >> len >> list;
+	
+	
+	for (int i=0;i<len;i++)
+	{
+		int k = 0;
+		if (list[i] != 'I') continue;
 
-    return answer;
+		while (list[i + 1] == 'O' && list[i + 2] == 'I')
+		{
+			k++;
+			if (k == n)
+			{
+				answer++;
+				k--;
+			}
+			i += 2;
+		}
+
+	}
+
+	cout << answer;
+	
+	return 0;
 }

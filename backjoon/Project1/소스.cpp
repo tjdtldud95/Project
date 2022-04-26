@@ -8,33 +8,21 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n,max = 0;
-	double* a;
-	double answer=0.f;
-	cin >> n;
-	a= new double[n];
-	for (int i = 0; i < n; i++)
+	int* n = new int[5];
+	int answer = 0;
+
+	for (int i = 0; i < 5; i++)
 	{
-		cin >> a[i];
-		if (max < a[i])
-		{
-			max = a[i];
-		}
-	}
-	for (int i = 0; i < n; i++)
-	{
-		a[i] = a[i]/ max;
-		a[i] *= 100;
+		cin >> n[i];
 	}
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		answer += a[i];
+		answer += n[i] * n[i];
 	}
 
-	answer /= n;
-	
-	printf("%lf", answer);
+	cout << answer%10;
+
 	
 	return 0;
 }

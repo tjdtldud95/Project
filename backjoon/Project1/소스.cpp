@@ -1,6 +1,5 @@
-﻿#include <string>
-#include <vector>
-#include <iostream>
+﻿#include <iostream>
+#include <algorithm>
 using namespace std;
 
 int main()
@@ -9,31 +8,33 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	string list;
-	int n, pLen,len,answer = 0;
-
-	cin >> n >> len >> list;
-	
-	
-	for (int i=0;i<len;i++)
+	int n,max = 0;
+	double* a;
+	double answer=0.f;
+	cin >> n;
+	a= new double[n];
+	for (int i = 0; i < n; i++)
 	{
-		int k = 0;
-		if (list[i] != 'I') continue;
-
-		while (list[i + 1] == 'O' && list[i + 2] == 'I')
+		cin >> a[i];
+		if (max < a[i])
 		{
-			k++;
-			if (k == n)
-			{
-				answer++;
-				k--;
-			}
-			i += 2;
+			max = a[i];
 		}
-
+	}
+	for (int i = 0; i < n; i++)
+	{
+		a[i] = a[i]/ max;
+		a[i] *= 100;
 	}
 
-	cout << answer;
+	for (int i = 0; i < n; i++)
+	{
+		answer += a[i];
+	}
+
+	answer /= n;
+	
+	printf("%lf", answer);
 	
 	return 0;
 }

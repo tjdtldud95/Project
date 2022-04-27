@@ -2,31 +2,56 @@
 #include <vector>
 using namespace std;
 
+int dp[21][21][21];
+int w(int a, int b, int c)
+{
+	if (a <= 0 || b <= 0 || c <= 0)
+		return 1;
 
-int bp[100000];
+	else if (a > 20 || b > 20 || c > 20)
+	{
+		return dp[20][20][20];
+	}
+
+	else if (a < b && b < c)
+	{
+		return dp[a][b][c - 1] + dp[a][b - 1][c - 1] - dp[a][b - 1][c];
+
+	}
+
+	else
+		return dp[a - 1][b][c] + dp[a - 1][b - 1][c] + dp[a - 1][b][c - 1] - dp[a - 1][b - 1][c - 1];
+
+}
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 	
-	int n,tmp; cin >> n;
-	vector<int> list;
-
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < 21; i++)
 	{
-		cin >> tmp;
-		list.push_back(tmp);
+		for (int j = 0; j < 21; j++)
+		{
+			for (int r = 0; r < 21; r++)
+			{
+				dp[i][j][r] = w(i, j, r);
+			}
+		}
+	}
+	int a=0, b=0, c=0;
+	while (true)
+	{
+		cin >> a >> b >> c;
+		if (a == -1 && b == -1 && c == -1)
+		{
+			break;
+		}
+
+		printf("w(%d, %d, %d) = %d\n", a, b, c, w(a, b, c));
 	}
 
-	bp[0] = list[0];
-	bp[1] = list[0] + list[1];
-	bp[2] = max(list[0], list[1]) + list[2];
-	for (int i = 3; i < n; i++)
-	{
-		bp[i] = max(bp[i - 2] + list[i], bp[i - 3] + list[i - 1] + list[i] );
-	}
 
-	cout << bp[n - 1];
 	return 0;
 }

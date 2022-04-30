@@ -1,22 +1,38 @@
 ﻿#include <iostream>
 using namespace std;
 
-int dp[1000001];
+
+int list[100001];
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n; cin >> n;
-	dp[1] = 1;
-	dp[2] = 2;
-
-	for (int i = 3; i <= n; i++)
+	int tmp, n, r,k=0,sum=0; cin >> n >> r;
+	int answer = INT16_MIN,index = 0;
+	for (int i = 0; i < n; i++)
 	{
-		dp[i] = (dp[i - 1] + dp[i - 2]) % 15746;
+		cin >> tmp;
+		list[i] = tmp;
+		sum += tmp;
+		k++;
+		if (k == r)
+		{
+			if (answer < sum)
+			{
+				answer = sum;
+			}
+
+			sum -= list[index];
+			index++;
+			k--;
+		}
+
 	}
 
-	cout << dp[n];
+	cout << answer;
+
+
 	return 0;
 }

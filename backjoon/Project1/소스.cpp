@@ -2,56 +2,45 @@
 #include <vector>
 using namespace std;
 
-int dp[21][21][21];
-int w(int a, int b, int c)
-{
-	if (a <= 0 || b <= 0 || c <= 0)
-		return 1;
-
-	else if (a > 20 || b > 20 || c > 20)
-	{
-		return dp[20][20][20];
-	}
-
-	else if (a < b && b < c)
-	{
-		return dp[a][b][c - 1] + dp[a][b - 1][c - 1] - dp[a][b - 1][c];
-
-	}
-
-	else
-		return dp[a - 1][b][c] + dp[a - 1][b - 1][c] + dp[a - 1][b][c - 1] - dp[a - 1][b - 1][c - 1];
-
-}
-
+int dp[1000001];
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
+
+	int n; cin >> n;
+	vector<int> list;
+	for (int i = 0; i < n; i++)
+	{
+		int tmp; cin >> tmp;
+		list.push_back(tmp);
+
+		if (i ==0)
+		{
+			dp[i] += tmp;
+		}
+
+		if (i == 1)
+		{
+			dp[i] += tmp + dp[0];
+		}
+
+		if (i == 2)
+		{
+			dp[2] = max(list[0], list[1]) + list[2];
+			dp[2] = max(dp[2], dp[1]);
+			continue;
+		}
+		if (i > 2)
+		{
+			dp[i] = max(dp[i - 2] + list[i], dp[i - 3] + list[i - 1] + list[i]);
+			dp[i] = max(dp[i], dp[i - 1]);
+		}
+	}
 	
-	for (int i = 0; i < 21; i++)
-	{
-		for (int j = 0; j < 21; j++)
-		{
-			for (int r = 0; r < 21; r++)
-			{
-				dp[i][j][r] = w(i, j, r);
-			}
-		}
-	}
-	int a=0, b=0, c=0;
-	while (true)
-	{
-		cin >> a >> b >> c;
-		if (a == -1 && b == -1 && c == -1)
-		{
-			break;
-		}
-
-		printf("w(%d, %d, %d) = %d\n", a, b, c, w(a, b, c));
-	}
 
 
+	cout << dp[n-1];
 	return 0;
 }

@@ -1,37 +1,56 @@
 ﻿#include <iostream>
+
 using namespace std;
 
+int blue, white;
+int list[130][130];
+void cal(int xStart ,int yStart, int max)
+{
+	int sum = 0;
+	for (int i = xStart; i < xStart+max; i++)
+	{
+		for (int j = yStart; j < yStart+max; j++)
+		{
+			sum += list[i][j];
+		}
+	}
 
-int list[100001];
+	if (sum == max*max)
+		blue++;
+
+	else if (sum == 0)
+		white++;
+
+	else
+	{
+		cal(xStart, yStart, max / 2);
+		cal(xStart, yStart+max/2, max / 2);
+		cal(xStart+max/2, yStart,  max / 2);
+		cal(xStart + max / 2, yStart + max / 2, max / 2);
+	}
+
+}
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int tmp, n, r,k=0,sum=0; cin >> n >> r;
-	int answer = INT16_MIN,index = 0;
+	int n; cin >> n;
+
 	for (int i = 0; i < n; i++)
 	{
-		cin >> tmp;
-		list[i] = tmp;
-		sum += tmp;
-		k++;
-		if (k == r)
+		for (int j = 0; j < n; j++)
 		{
-			if (answer < sum)
-			{
-				answer = sum;
-			}
-
-			sum -= list[index];
-			index++;
-			k--;
+			int temp; cin >> temp;
+			list[i][j] = temp;
 		}
-
 	}
 
-	cout << answer;
+	cal(0, 0, n);
+
+	cout << white << "\n" << blue;
 
 
 	return 0;

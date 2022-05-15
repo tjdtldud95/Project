@@ -1,57 +1,112 @@
-﻿#include <iostream>
-
+﻿#include <string>
+#include <vector>
+#include <sstream>
+#include <map>
+#include <iostream>
+#include<algorithm>
 using namespace std;
 
-int blue, white;
-int list[130][130];
-void cal(int xStart ,int yStart, int max)
-{
-	int sum = 0;
-	for (int i = xStart; i < xStart+max; i++)
+
+bool list[30][30];
+char bach[30][30];
+
+int solution(int m, int n, vector<string> board) {
+	int answer = 0;
+	int index = 0;
+	bool again;
+
+	for(auto its : board)
 	{
-		for (int j = yStart; j < yStart+max; j++)
+		int len = its.size();
+		for (int i = 0; i < len; i++)
 		{
-			sum += list[i][j];
+			list[index][i] = true;
+			bach[index][i] = board[index][i];
+		}
+		index++;
+	}
+
+	do 
+	{
+		again = false;
+		for (int i = 0; i < m - 1; i++)
+		{
+			for (int j = 0; j < n - 1; j++)
+			{
+				if (bach[i][j] == '0' ) continue;
+
+				if (bach[i][j] == bach[i][j + 1]
+					&& bach[i + 1][j] == bach[i + 1][j + 1]
+					&& bach[i][j] == bach[i + 1][j + 1])
+				{
+					list[i][j] = false;
+					list[i][j + 1] = false;
+					list[i + 1][j] = false;
+					list[i + 1][j + 1] = false;
+
+					again = true;
+				}
+			}
+		}
+
+		for (int i = 0; i < m ; i++)
+		{
+			for (int j = 0; j < n ; j++)
+			{
+				if (list[i][j] == false)
+				{
+					bach[i][j] = '0';
+				}
+			}
+		}
+		
+		for (int i = m; i >0; i--)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (bach[i][j] == '0')
+				{
+					for (int pos = i - 1; ; pos--)
+					{
+						if (pos < 0)break;
+						if (bach[pos][j] != '0')
+						{
+							list[i][j] = true;
+							list[pos][j] = false;
+
+							bach[i][j] = bach[pos][j];
+							bach[pos][j] = '0';
+							break;
+						}
+					}
+				}
+			}
+			
+		}
+	} while (again);
+	
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (bach[i][j] == '0')
+			{
+				answer++;
+			}
 		}
 	}
 
-	if (sum == max*max)
-		blue++;
 
-	else if (sum == 0)
-		white++;
-
-	else
-	{
-		cal(xStart, yStart, max / 2);
-		cal(xStart, yStart+max/2, max / 2);
-		cal(xStart+max/2, yStart,  max / 2);
-		cal(xStart + max / 2, yStart + max / 2, max / 2);
-	}
-
+	cout << answer;
+	return answer;
 }
-
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n; cin >> n;
-
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			int temp; cin >> temp;
-			list[i][j] = temp;
-		}
-	}
-
-	cal(0, 0, n);
-
-	cout << white << "\n" << blue;
-
+	solution(7, 2, { "AA", "BB", "AA", "BB", "ZZ", "ZZ", "CC" });
 
 	return 0;
 }

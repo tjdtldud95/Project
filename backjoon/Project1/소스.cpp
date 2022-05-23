@@ -1,27 +1,18 @@
-﻿#include <string>
-#include <vector>
-#include <sstream>
-#include <map>
+﻿#include <vector>
 #include <iostream>
-#include<algorithm>
+#include <map>
 using namespace std;
 
-
-
-string a(string s)
+bool isPoll[101];
+void check(const vector<int> list[], const int& start = 1)
 {
-	string answer = s;
-	int len = answer.size();
-	answer[0] = toupper(answer[0]);
-	
-	for (int i = 1; i < len; i++)
+	for (int it : list[start])
 	{
-		answer[i - 1] == ' ' ? answer[i] = toupper(answer[i]) : answer[i] = tolower(answer[i]);
-	}
-
-	return answer;
+		if (isPoll[it])	continue;
+		isPoll[it] = true;
+		check(list, it);
+	}	
 }
-
 
 int main()
 {
@@ -29,7 +20,32 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	//solution(9, { 0,0,1,2,0,1,1,1,1,1,1 });
-	cout << a(" ");
+	vector<int> list[101];
+	int n, m, answer = 0;
+
+	int con1, con2;
+	cin >> n >> m;
+
+	for (int i = 0; i < m; i++)
+	{
+		cin >> con1 >> con2;
+
+		list[con1].push_back(con2);
+		list[con2].push_back(con1);
+	}
+	check(list);
+
+	
+	for (int i = 2; i <= n; i++)
+	{
+		if (isPoll[i])// answer++;
+		{
+			cout << i << " ";
+			answer++;
+		}
+	}
+
+	cout <<"\n" << answer;
+
 	return 0;
 }

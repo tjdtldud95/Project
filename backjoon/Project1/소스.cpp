@@ -1,51 +1,93 @@
-﻿#include <vector>
+﻿#include <string>
+#include <vector>
 #include <iostream>
-#include <map>
 using namespace std;
 
-bool isPoll[101];
-void check(const vector<int> list[], const int& start = 1)
-{
-	for (int it : list[start])
-	{
-		if (isPoll[it])	continue;
-		isPoll[it] = true;
-		check(list, it);
-	}	
-}
+vector<int> solution(int n) {
+	vector<int> answer;
+	vector<int>* list = new vector<int>[n + 1];
 
+	int max = n;
+	int index = 1, repeat = 0;
+	int i, m = 1;
+	while (1)
+	{
+		for (i = 0; i < max; i++)
+		{
+			if (list[m].size() == 0)
+			{
+				list[m].push_back(index++);
+				m++;
+			}
+			else
+			{
+				list[m].insert(list[m].begin() + repeat, index++);
+				m++;
+			}
+		}
+		m--;
+		max--;
+		if (max < 0) break;
+
+		for (i = 0; i < max; i++)
+		{
+			if (list[m].size() == 0)
+				list[m].push_back(index++);
+
+			else
+				list[m].insert(list[m].end() - repeat, index++);
+
+		}
+		m--;
+		max--;
+		if (max < 0) break;
+
+		for (i = 0; i < max; i++)
+		{
+			if (list[m].size() == 0 )
+				list[m--].push_back(index++);
+
+			else
+			{
+				list[m].insert(list[m].end()- repeat, index++);
+				m--;
+			}
+		}
+		m += 2;
+		max--;
+		repeat++;
+		if (max < 0) break;
+	}
+
+	for (int i = 1; i <= n; i++)
+	{
+		cout<<i<<"  : ";
+		for (auto it : list[i])
+		{
+			cout << it << " ";
+		}
+		cout << "\n";
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		for (auto it : list[i])
+		{
+			answer.push_back(it);
+		}
+	}
+
+	for (auto i : answer)
+		cout << i << " ";
+	return answer;
+}
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	vector<int> list[101];
-	int n, m, answer = 0;
 
-	int con1, con2;
-	cin >> n >> m;
-
-	for (int i = 0; i < m; i++)
-	{
-		cin >> con1 >> con2;
-
-		list[con1].push_back(con2);
-		list[con2].push_back(con1);
-	}
-	check(list);
-
-	
-	for (int i = 2; i <= n; i++)
-	{
-		if (isPoll[i])// answer++;
-		{
-			cout << i << " ";
-			answer++;
-		}
-	}
-
-	cout <<"\n" << answer;
+	solution(5);
 
 	return 0;
 }

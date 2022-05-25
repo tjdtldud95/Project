@@ -1,83 +1,116 @@
 ﻿#include <string>
 #include <vector>
 #include <iostream>
+#include <map>
 using namespace std;
 
-vector<int> solution(int n) {
+
+vector<int> solution(int n, vector<int> info)
+{
 	vector<int> answer;
-	vector<int>* list = new vector<int>[n + 1];
-
-	int max = n;
-	int index = 1, repeat = 0;
-	int i, m = 1;
-	while (1)
+	int max = 0, gap=0;
+	for (int index = 0; index < 11; index++)
 	{
-		for (i = 0; i < max; i++)
+		int list[11] = { 0 };
+		int size = n;
+		int lion = 0, apach = 0;
+
+		for (int i = 0; i < 11; i++)
 		{
-			if (list[m].size() == 0)
+			if (size <= 0) break;
+			if (size < info[i] + 1) continue;
+			if (i == index)continue;
+
+			list[i] = info[i] + 1;
+			size -= list[i];
+		}
+
+		if (size > 0) list[10] = size;
+
+		for (int i=0;i<11;i++)
+		{
+			if (list[i] > info[i])
+				lion += 10 - i;
+			
+			else if(info[i] >0)
+				apach += 10 - i;
+		}
+
+		if (max == lion - apach)
+		{
+			max = lion - apach;
+			if (gap == 0)
 			{
-				list[m].push_back(index++);
-				m++;
+				gap = lion - apach;
+				answer.clear();
+				for (auto i : list)
+				{
+					answer.push_back(i);
+				}
 			}
-			else
+			
+			else if(gap <lion-apach)
 			{
-				list[m].insert(list[m].begin() + repeat, index++);
-				m++;
+				gap = lion - apach;
+				answer.clear();
+				for (auto i : list)
+				{
+					answer.push_back(i);
+				}
+			}
+
+			else if (gap == lion - apach)
+			{
+				bool chage = false;
+				for (int i = 10; i >= 0; i--)
+				{	
+					if (list[i] > answer[i])
+					{
+						chage = true;
+						break;
+					}
+					else if (list[i] < answer[i])
+					{
+						break;
+					}
+				}
+				
+				if (chage)
+				{
+					answer.clear();
+					for (auto i : list)
+					{
+						answer.push_back(i);
+					}
+				}
 			}
 		}
-		m--;
-		max--;
-		if (max < 0) break;
 
-		for (i = 0; i < max; i++)
+		else if (max < lion - apach)
 		{
-			if (list[m].size() == 0)
-				list[m].push_back(index++);
-
-			else
-				list[m].insert(list[m].end() - repeat, index++);
-
-		}
-		m--;
-		max--;
-		if (max < 0) break;
-
-		for (i = 0; i < max; i++)
-		{
-			if (list[m].size() == 0 )
-				list[m--].push_back(index++);
-
-			else
+			max = lion - apach;
+			gap = lion - apach;
+			answer.clear();
+			for (auto i : list)
 			{
-				list[m].insert(list[m].end()- repeat, index++);
-				m--;
+				answer.push_back(i);
 			}
 		}
-		m += 2;
-		max--;
-		repeat++;
-		if (max < 0) break;
-	}
 
-	for (int i = 1; i <= n; i++)
-	{
-		cout<<i<<"  : ";
-		for (auto it : list[i])
+		
+		for (auto i : list)
 		{
-			cout << it << " ";
+			cout << i << " ";
 		}
 		cout << "\n";
 	}
-	for (int i = 1; i <= n; i++)
-	{
-		for (auto it : list[i])
-		{
-			answer.push_back(it);
-		}
-	}
 
+	if (answer.empty()) answer.push_back(-1);
+	cout << "==========================\n";
 	for (auto i : answer)
+	{
 		cout << i << " ";
+	}
 	return answer;
 }
 int main()
@@ -86,8 +119,8 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
+	solution(5,{ 0,0,0,1,1,1,1,1,0,0,0 });
 
-	solution(5);
 
 	return 0;
 }
